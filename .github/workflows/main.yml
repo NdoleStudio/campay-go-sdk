@@ -12,20 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: ls
-        run:  ls -la
-
       - name: Setup Go
         uses: actions/setup-go@v2
-
-      - name: ls
-        run: |
-          ls -la
 
       - name: Setup
         run: |
           go version
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $GOPATH/bin v1.24.0
+          sudo curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $GOPATH/bin v1.24.0
           golangci-lint.exe --version
           go get golang.org/x/tools/cmd/cover
           go get -t -v ./...
@@ -51,10 +44,5 @@ jobs:
       - name: Test
         run: go test -v -race -coverprofile=coverage.txt -covermode=atomic
 
-      - name: Push to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          files: ./coverage.txt
-          name: codecov-umbrella
-          fail_ci_if_error: true
-          verbose: true
+      - name: Upload coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)
