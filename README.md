@@ -2,13 +2,14 @@
 
 [![Build](https://github.com/NdoleStudio/campay-go-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/NdoleStudio/campay-go-sdk/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/NdoleStudio/campay-go-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/NdoleStudio/campay-go-sdk)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NdoleStudio/campay-go-sdk/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/NdoleStudio/campay-go-sdk/?branch=main)
 [![Go Report Card](https://goreportcard.com/badge/github.com/NdoleStudio/campay-go-sdk)](https://goreportcard.com/report/github.com/NdoleStudio/campay-go-sdk)
 [![GitHub contributors](https://img.shields.io/github/contributors/NdoleStudio/campay-go-sdk)](https://github.com/NdoleStudio/campay-go-sdk/graphs/contributors)
 [![GitHub license](https://img.shields.io/github/license/NdoleStudio/campay-go-sdk?color=brightgreen)](https://github.com/NdoleStudio/campay-go-sdk/blob/master/LICENSE)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/NdoleStudio/campay-go-sdk)](https://pkg.go.dev/github.com/NdoleStudio/campay-go-sdk)
 
 
-This package provides a `go` client for interacting with the [CamPay REST API](https://documenter.getpostman.com/view/2391374/T1LV8PVA#intro)
+This package provides a `go` client for interacting with the [CamPay API](https://documenter.getpostman.com/view/2391374/T1LV8PVA#intro)
 
 ## Installation
 

@@ -27,7 +27,7 @@ type Client struct {
 	apiPassword         string
 	token               string
 	tokenExpirationTime int64
-	Token               *TokenService
+	Transaction         *TransactionService
 }
 
 // New creates and returns a new campay.Client from a slice of campay.ClientOption.
@@ -47,14 +47,68 @@ func New(options ...ClientOption) *Client {
 	}
 
 	client.common.client = client
-	client.Token = (*TokenService)(&client.common)
+	client.Transaction = (*TransactionService)(&client.common)
 	return client
+}
+
+// Token Gets the access token
+// POST /token/
+// API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#8803168b-d451-4d65-b8cc-85e385bc3050
+func (client *Client) Token(ctx context.Context) (*Token, *Response, error) {
+	payload := map[string]string{
+		"username": client.apiUsername,
+		"password": client.apiPassword,
+	}
+
+	request, err := client.newRequest(ctx, http.MethodPost, "/token", payload)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	resp, err := client.do(request)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	var token Token
+	if err = json.Unmarshal(*resp.Body, &token); err != nil {
+		return nil, resp, err
+	}
+
+	return &token, resp, nil
+}
+
+// Collect Requests a Payment
+// POST /collect/
+// API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#31757962-2e07-486b-a6f4-a7cc7a06d032
+func (client *Client) Collect(ctx context.Context, options *CollectOptions) (*CollectResponse, *Response, error) {
+	err := client.refreshToken(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	request, err := client.newRequest(ctx, http.MethodPost, "/token", options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	response, err := client.do(request)
+	if err != nil {
+		return nil, response, err
+	}
+
+	var collectResponse CollectResponse
+	if err = json.Unmarshal(*response.Body, &collectResponse); err != nil {
+		return nil, response, err
+	}
+
+	return &collectResponse, response, nil
 }
 
 // newRequest creates an API request. A relative URL can be provided in uri,
 // in which case it is resolved relative to the BaseURL of the Client.
 // URI's should always be specified without a preceding slash.
-func (c *Client) newRequest(ctx context.Context, method, uri string, body interface{}) (*http.Request, error) {
+func (client *Client) newRequest(ctx context.Context, method, uri string, body interface{}) (*http.Request, error) {
 	var buf io.ReadWriter
 	if body != nil {
 		buf = &bytes.Buffer{}
@@ -66,34 +120,34 @@ func (c *Client) newRequest(ctx context.Context, method, uri string, body interf
 		}
 	}
 
-	req, err := http.NewRequestWithContext(ctx, method, c.environment.String()+uri, buf)
+	req, err := http.NewRequestWithContext(ctx, method, client.environment.String()+uri, buf)
 	if err != nil {
 		return nil, err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
 
-	if len(c.token) > 0 {
-		req.Header.Set("Authorization", "Token "+c.token)
+	if len(client.token) > 0 {
+		req.Header.Set("Authorization", "Token "+client.token)
 	}
 
 	return req, nil
 }
 
 // do carries out an HTTP request and returns a Response
-func (c *Client) do(req *http.Request) (*Response, error) {
+func (client *Client) do(req *http.Request) (*Response, error) {
 	if req == nil {
 		return nil, fmt.Errorf("%T cannot be nil", req)
 	}
 
-	httpResponse, err := c.httpClient.Do(req)
+	httpResponse, err := client.httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 
 	defer func() { _ = httpResponse.Body.Close() }()
 
-	resp, err := c.newResponse(httpResponse)
+	resp, err := client.newResponse(httpResponse)
 	if err != nil {
 		return resp, err
 	}
@@ -107,26 +161,26 @@ func (c *Client) do(req *http.Request) (*Response, error) {
 }
 
 // refreshToken refreshes the authentication Token
-func (c *Client) refreshToken(ctx context.Context) error {
-	if c.tokenExpirationTime > time.Now().UTC().Unix() {
+func (client *Client) refreshToken(ctx context.Context) error {
+	if client.tokenExpirationTime > time.Now().UTC().Unix() {
 		return nil
 	}
 
-	c.mutex.Lock()
-	defer c.mutex.Unlock()
+	client.mutex.Lock()
+	defer client.mutex.Unlock()
 
-	token, _, err := c.Token.Get(ctx)
+	token, _, err := client.Token(ctx)
 	if err != nil {
 		return err
 	}
 
-	c.tokenExpirationTime = time.Now().UTC().Unix() + token.ExpiresIn - 100 // Give extra 100 second buffer
+	client.tokenExpirationTime = time.Now().UTC().Unix() + token.ExpiresIn - 100 // Give extra 100 second buffer
 
 	return nil
 }
 
 // newResponse converts an *http.Response to *Response
-func (c *Client) newResponse(httpResponse *http.Response) (*Response, error) {
+func (client *Client) newResponse(httpResponse *http.Response) (*Response, error) {
 	if httpResponse == nil {
 		return nil, fmt.Errorf("%T cannot be nil", httpResponse)
 	}

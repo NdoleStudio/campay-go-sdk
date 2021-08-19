@@ -20,7 +20,7 @@ func TestNew(t *testing.T) {
 		assert.Empty(t, client.apiPassword)
 
 		assert.NotNil(t, client.httpClient)
-		assert.NotNil(t, client.Token)
+		assert.NotNil(t, client.Transaction)
 	})
 
 	t.Run("single configuration value can be set using options", func(t *testing.T) {
@@ -51,12 +51,12 @@ func TestNew(t *testing.T) {
 		assert.Equal(t, newHTTPClient.Timeout, client.httpClient.Timeout)
 	})
 
-	t.Run("it sets the Token service correctly", func(t *testing.T) {
+	t.Run("it sets the Transaction service correctly", func(t *testing.T) {
 		// Arrange
 		client := New()
 
 		// Assert
-		assert.NotNil(t, client.Token)
-		assert.Equal(t, client.environment.String(), client.Token.client.environment.String())
+		assert.NotNil(t, client.Transaction)
+		assert.Equal(t, client.environment.String(), client.Transaction.client.environment.String())
 	})
 }
