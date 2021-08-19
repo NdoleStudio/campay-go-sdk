@@ -1,6 +1,6 @@
 # Campay Go SDK
 
-[![Build Status](https://github.com/NdoleStudio/campay-go-sdk/actions/workflows/master.yml/badge.svg)](https://github.com/NdoleStudio/campay-go-sdk/actions/workflows/master.yml)
+[![Build](https://github.com/NdoleStudio/campay-go-sdk/actions/workflows/master.yml/badge.svg)](https://github.com/NdoleStudio/campay-go-sdk/actions/workflows/master.yml)
 [![codecov](https://codecov.io/gh/NdoleStudio/campay-go-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/NdoleStudio/campay-go-sdk)
 [![Go Report Card](https://goreportcard.com/badge/github.com/NdoleStudio/campay-go-sdk)](https://goreportcard.com/report/github.com/NdoleStudio/campay-go-sdk)
 [![GitHub contributors](https://img.shields.io/github/contributors/NdoleStudio/campay-go-sdk)](https://github.com/NdoleStudio/campay-go-sdk/graphs/contributors)
