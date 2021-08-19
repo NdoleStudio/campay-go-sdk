@@ -5,10 +5,6 @@ name: Build
     branches:
       - main
 
-defaults:
-  run:
-    working-directory: ./frontend
-
 jobs:
   validate:
     runs-on: ubuntu-latest
