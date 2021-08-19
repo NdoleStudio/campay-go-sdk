@@ -75,15 +75,31 @@ This handles all API requests whose URL begins with `/token/`
 `POST /token/`: Get access token
 
 ```go
-response, _, err := campayClient.Token(
-	context.Background(),
-)
+token, _, err := campayClient.Token(context.Background())
 
 if err != nil {
     log.Fatal(err)
 }
 
-log.Println(response.Token) // e.g eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0.eyJpYXQiOjE2MDM4MjQ...
+log.Println(token.Token) // e.g eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0.eyJpYXQiOjE2MDM4MjQ...
+```
+
+### Collect
+
+This handles all API requests whose URL begins with `/collect/`
+
+#### Get access token
+
+`POST /collect/`: Request Payment
+
+```go
+payload, httpResponse, err := campayClient.Collect(context.Background(), campay.CollectOptions{
+	Amount: 100,
+    Currency: "XAF",
+    From: "2376XXXXXXXX",
+    Description: "Test",
+    ExternalReference: "",
+})
 ```
 
 ## Testing
