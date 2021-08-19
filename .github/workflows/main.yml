@@ -6,7 +6,7 @@ name: Build
       - main
 
 jobs:
-  validate:
+  Validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,14 +19,14 @@ jobs:
         run: |
           go version
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sudo sh -s -- -b $GOPATH/bin v1.24.0
-          golangci-lint.exe --version
+          golangci-lint --version
           go get golang.org/x/tools/cmd/cover
           go get -t -v ./...
 
       - name: Golang CI Lint
         run: golangci-lint run
 
-  test:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
