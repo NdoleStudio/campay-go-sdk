@@ -15,9 +15,8 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
 
-      - name: Setup
+      - name: Setup Dependencies
         run: |
-          go version
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sudo sh -s -- -b $GOPATH/bin v1.24.0
           golangci-lint --version
           go get golang.org/x/tools/cmd/cover
@@ -35,13 +34,12 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
 
-      - name: Setup
+      - name: Setup Dependencies
         run: |
-          go version
           go get golang.org/x/tools/cmd/cover
           go get -t -v ./...
 
-      - name: Test
+      - name: Run Tests
         run: go test -v -race -coverprofile=coverage.txt -covermode=atomic
 
       - name: Upload coverage to Codecov
