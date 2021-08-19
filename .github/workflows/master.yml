@@ -39,7 +39,7 @@ jobs:
 
       - name: Setup Go
         uses: actions/setup-go@v2
-        run: go version
+      - run: go version
 
       - name: Setup
       - run: go get golang.org/x/tools/cmd/cover
