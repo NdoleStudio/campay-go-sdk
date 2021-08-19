@@ -16,8 +16,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: ls
+        run: |
+          ls -la
+
       - name: Setup Go
         uses: actions/setup-go@v2
+
+      - name: ls
+        run: |
+          ls -la
 
       - name: Setup
         run: |
