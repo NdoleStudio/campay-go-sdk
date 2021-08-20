@@ -2,7 +2,7 @@ package campay
 
 // CollectOptions is the details needed to initialize a payment
 type CollectOptions struct {
-	Amount            int64  `json:"amount"`
+	Amount            uint   `json:"amount"`
 	Currency          string `json:"currency"`
 	From              string `json:"from"`
 	Description       string `json:"description"`

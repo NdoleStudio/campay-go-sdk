@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/golang-jwt/jwt"
 )
 
 type service struct {
@@ -60,7 +62,7 @@ func (client *Client) Token(ctx context.Context) (*Token, *Response, error) {
 		"password": client.apiPassword,
 	}
 
-	request, err := client.newRequest(ctx, http.MethodPost, "/token", payload)
+	request, err := client.newRequest(ctx, http.MethodPost, "/token/", payload)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -78,6 +80,14 @@ func (client *Client) Token(ctx context.Context) (*Token, *Response, error) {
 	return &token, resp, nil
 }
 
+// ValidateCallback checks if the signature was encrypted with the webhook key
+func (client *Client) ValidateCallback(signature string, webhookKey []byte) error {
+	_, err := jwt.Parse(signature, func(token *jwt.Token) (interface{}, error) {
+		return webhookKey, nil
+	})
+	return err
+}
+
 // Collect Requests a Payment
 // POST /collect/
 // API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#31757962-2e07-486b-a6f4-a7cc7a06d032
@@ -87,7 +97,7 @@ func (client *Client) Collect(ctx context.Context, options *CollectOptions) (*Co
 		return nil, nil, err
 	}
 
-	request, err := client.newRequest(ctx, http.MethodPost, "/token", options)
+	request, err := client.newRequest(ctx, http.MethodPost, "/collect/", options)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -174,6 +184,7 @@ func (client *Client) refreshToken(ctx context.Context) error {
 		return err
 	}
 
+	client.token = token.Token
 	client.tokenExpirationTime = time.Now().UTC().Unix() + token.ExpiresIn - 100 // Give extra 100 second buffer
 
 	return nil
