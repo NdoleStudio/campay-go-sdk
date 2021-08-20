@@ -8,7 +8,7 @@ var (
 	DevEnvironment = Environment("https://demo.campay.net/api")
 
 	// ProdEnvironment is the production Environment
-	ProdEnvironment = Environment("https://campay.net/api")
+	ProdEnvironment = Environment("https://www.campay.net/api")
 )
 
 func (e Environment) String() string {
