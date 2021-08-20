@@ -81,7 +81,7 @@ if err != nil {
     log.Fatal(err)
 }
 
-log.Println(token.Token) // e.g eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0.eyJpYXQiOjE2MDM4MjQ...
+log.Println(token.Token) // e.g eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0...
 ```
 
 ### Collect
@@ -94,7 +94,7 @@ This handles all API requests whose URL begins with `/collect/`
 
 ```go
 payload, httpResponse, err := campayClient.Collect(context.Background(), campay.CollectOptions{
-	Amount: 100,
+    Amount: 100,
     Currency: "XAF",
     From: "2376XXXXXXXX",
     Description: "Test",
