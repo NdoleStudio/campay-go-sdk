@@ -60,3 +60,31 @@ func TestNew(t *testing.T) {
 		assert.Equal(t, client.environment.String(), client.Transaction.client.environment.String())
 	})
 }
+
+func TestClient_ValidateCallback(t *testing.T) {
+	t.Run("valid signature and key returns nil error", func(t *testing.T) {
+		// Arrange
+		client := New()
+		key := []byte("geTrvNBLvXS35UvK3PnTnQgpjGmaEGe7wa6k3Ns4zehhvjncsjXnQsV7ZzhDWjDMEt7")
+		signature := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.9kFRoXMiiGWhCbnDPoOMVhgVTzYxu2MjNi-uTWGRcEU"
+
+		// Act
+		err := client.ValidateCallback(signature, key)
+
+		// Assert
+		assert.Nil(t, err)
+	})
+
+	t.Run("invalid key returns and error", func(t *testing.T) {
+		// Arrange
+		client := New()
+		key := []byte("geTrvNBLvXS35UvK3PnTnQgpjGmaEGe7wa6k3Ns4zehhvjncsjXnQsV7ZzhDWjDMEt7-invalid")
+		signature := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.9kFRoXMiiGWhCbnDPoOMVhgVTzYxu2MjNi-uTWGRcEU"
+
+		// Act
+		err := client.ValidateCallback(signature, key)
+
+		// Assert
+		assert.NotNil(t, err)
+	})
+}
