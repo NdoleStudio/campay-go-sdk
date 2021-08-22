@@ -179,13 +179,15 @@ func (client *Client) refreshToken(ctx context.Context) error {
 	client.mutex.Lock()
 	defer client.mutex.Unlock()
 
+	client.token = ""
+
 	token, _, err := client.Token(ctx)
 	if err != nil {
 		return err
 	}
 
 	client.token = token.Token
-	client.tokenExpirationTime = time.Now().UTC().Unix() + token.ExpiresIn - 100 // Give extra 100 second buffer
+	client.tokenExpirationTime = time.Now().UTC().Unix() + token.ExpiresIn - 1000 // Give extra 100 second buffer
 
 	return nil
 }
