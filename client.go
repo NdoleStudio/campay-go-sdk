@@ -29,7 +29,7 @@ type Client struct {
 	apiPassword         string
 	token               string
 	tokenExpirationTime int64
-	Transaction         *TransactionService
+	Transaction         *transactionService
 }
 
 // New creates and returns a new campay.Client from a slice of campay.ClientOption.
@@ -49,7 +49,7 @@ func New(options ...ClientOption) *Client {
 	}
 
 	client.common.client = client
-	client.Transaction = (*TransactionService)(&client.common)
+	client.Transaction = (*transactionService)(&client.common)
 	return client
 }
 

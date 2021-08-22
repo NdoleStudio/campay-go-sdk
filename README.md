@@ -31,6 +31,8 @@ import "github.com/NdoleStudio/campay-go-sdk"
   - `POST /token` - Get access token
 - [Collect](#collect)
   - `POST /collect` - Request Payment
+- [Transaction](#transaction)
+  - `POST /transaction/(reference)/` - Transaction Status
 
 ## Usage
 
@@ -88,7 +90,7 @@ log.Println(token.Token) // e.g eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0.
 
 This handles all API requests whose URL begins with `/collect/`
 
-#### Get access token
+#### Request Payment
 
 `POST /collect/`: Request Payment
 
@@ -100,6 +102,21 @@ payload, httpResponse, err := campayClient.Collect(context.Background(), campay.
     Description: "Test",
     ExternalReference: "",
 })
+```
+
+### Transaction
+
+This handles all API requests whose URL begins with `/transaction/`
+
+#### R
+
+`POST /transaction/(reference)/`: Transaction Status
+
+```go
+transaction, httpResponse, err := campayClient.Transaction.Get(
+	context.Background(),
+	"bcedde9b-62a7-4421-96ac-2e6179552a1a"
+)
 ```
 
 ## Testing
