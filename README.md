@@ -28,11 +28,13 @@ import "github.com/NdoleStudio/campay-go-sdk"
 ## Implemented
 
 - [Token](#token)
-  - `POST /token` - Get access token
+  - `POST /token`: Get access token
 - [Collect](#collect)
-  - `POST /collect` - Request Payment
+  - `POST /collect`: Request Payment
+- [Withdraw](#withdraw)
+  - `POST /withdraw`: Withdraw funds to a mobile money account
 - [Transaction](#transaction)
-  - `POST /transaction/(reference)/` - Transaction Status
+  - `GET /transaction/{reference}/`: Get the status of a transaction
 
 ## Usage
 
@@ -90,41 +92,87 @@ log.Println(token.Token) // e.g eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0.
 
 This handles all API requests whose URL begins with `/collect/`
 
-#### Request Payment
+#### `POST /collect/`: Request Payment
 
-`POST /collect/`: Request Payment
+This endpoint is used to request payment from users.
 
 ```go
-payload, httpResponse, err := campayClient.Collect(context.Background(), campay.CollectOptions{
+collectResponse, httpResponse, err := campayClient.Collect(context.Background(), campay.CollectOptions{
     Amount: 100,
     Currency: "XAF",
     From: "2376XXXXXXXX",
     Description: "Test",
     ExternalReference: "",
 })
+
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Prinln(collectResponse.Reference) // e.g 26676007-1c31-46d7-9c71-acb031cf0de4
+```
+
+### Withdraw
+
+This handles all API requests whose URL begins with `/withdraw/`
+
+#### `POST /withdraw`: Withdraw funds to a mobile money account
+
+Withdraw funds from an app to a mobile money account.
+
+```go
+withdrawResponse, response, err := client.Withdraw(context.Background(), &WithdrawParams{
+    Amount:            100,
+    To:                "2376XXXXXXXX",
+    Description:       "Test",
+    ExternalReference: nil,
+})
+
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(withdrawResponse.Reference) // e.g 26676007-1c31-46d7-9c71-acb031cf0de4
 ```
 
 ### Transaction
 
 This handles all API requests whose URL begins with `/transaction/`
 
-#### R
+#### `GET /transaction/{reference}/`: Get the status of a transaction
 
-`POST /transaction/(reference)/`: Transaction Status
+Use this endpoint to check for the status of an initiated transaction.
 
 ```go
 transaction, httpResponse, err := campayClient.Transaction.Get(
 	context.Background(),
 	"bcedde9b-62a7-4421-96ac-2e6179552a1a"
 )
+
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(transaction.Reference) // e.g 26676007-1c31-46d7-9c71-acb031cf0de4
 ```
 
 ## Testing
 
-You can run the unit tests for this SDK from the root directory using the command below:
+You can run the unit tests for this client from the root directory using the command below:
+
 ```bash
 go test -v
 ```
+
+### Security
+
+If you discover any security related issues, please email arnoldewin@gmail.com instead of using the GitHub issues.
+
+## Credits
+
+- [Acho Arnold](https://github.com/AchoArnold)
+- [All Contributors](../../contributors)
+
 
 ## License
 

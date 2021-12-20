@@ -91,13 +91,13 @@ func (client *Client) ValidateCallback(signature string, webhookKey []byte) erro
 // Collect Requests a Payment
 // POST /collect/
 // API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#31757962-2e07-486b-a6f4-a7cc7a06d032
-func (client *Client) Collect(ctx context.Context, options *CollectOptions) (*CollectResponse, *Response, error) {
+func (client *Client) Collect(ctx context.Context, params *CollectParams) (*CollectResponse, *Response, error) {
 	err := client.refreshToken(ctx)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	request, err := client.newRequest(ctx, http.MethodPost, "/collect/", options)
+	request, err := client.newRequest(ctx, http.MethodPost, "/collect/", params)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -113,6 +113,33 @@ func (client *Client) Collect(ctx context.Context, options *CollectOptions) (*Co
 	}
 
 	return &collectResponse, response, nil
+}
+
+// Withdraw funds to a mobile money account
+// POST /withdraw/
+// API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#885dbde0-b0dd-4514-a0f9-f84fc83df12d
+func (client *Client) Withdraw(ctx context.Context, params *WithdrawParams) (*WithdrawResponse, *Response, error) {
+	err := client.refreshToken(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	request, err := client.newRequest(ctx, http.MethodPost, "/withdraw/", params)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	response, err := client.do(request)
+	if err != nil {
+		return nil, response, err
+	}
+
+	var withdrawResponse WithdrawResponse
+	if err = json.Unmarshal(*response.Body, &withdrawResponse); err != nil {
+		return nil, response, err
+	}
+
+	return &withdrawResponse, response, nil
 }
 
 // newRequest creates an API request. A relative URL can be provided in uri,

@@ -1,13 +1,13 @@
 package stubs
 
 // PostTokenResponse is a dummy JSOn response for getting access token
-func PostTokenResponse() string {
-	return `
+func PostTokenResponse() []byte {
+	return []byte(`
 	{
 		"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInVpZCI6Mn0.eyJpYXQiOjE2MDM4MjQyODMsIm5iZiI6MTYwMzgyNDI4MywiZXhwIjoxNjAzODI3ODgzfQ.ufW8sCrf_W2RFpVvH6zri0l7pJLnkPXCZi1zc10ZvOg",
 		"expires_in": 3600
 	}
-`
+`)
 }
 
 // PostCollectResponse is a dummy JSON response for requesting a payment
@@ -21,8 +21,8 @@ func PostCollectResponse() string {
 }
 
 // GetTransactionResponse is a dummy JSON response for the Transaction Status
-func GetTransactionResponse() string {
-	return `
+func GetTransactionResponse() []byte {
+	return []byte(`
 	{
 		"reference": "bcedde9b-62a7-4421-96ac-2e6179552a1a",
 		"status": "PENDING",
@@ -31,7 +31,7 @@ func GetTransactionResponse() string {
 		"operator": "MTN",
 		"code": "CP201027T00005",
 		"operator_reference": "1880106956"
-	}`
+	}`)
 }
 
 // GetBalanceResponse is a dummy JSON response for the transaction balance
@@ -44,6 +44,16 @@ func GetBalanceResponse() string {
 		"currency": "XAF"
 	}
 `
+}
+
+// PostWithdrawResponse is a dummy JSON response for withdraw requests
+func PostWithdrawResponse() []byte {
+	return []byte(`
+	{
+		"reference":"26676007-1c31-46d7-9c71-acb031cf0de4",
+		"status":"PENDING"
+	}
+`)
 }
 
 // GetHistoryResponse is a dummy JSON response for the transaction history

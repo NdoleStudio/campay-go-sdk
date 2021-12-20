@@ -1,8 +1,13 @@
 package campay
 
 import (
+	"context"
 	"net/http"
+	"strings"
 	"testing"
+
+	"github.com/NdoleStudio/campay-go-sdk/internal/helpers"
+	"github.com/NdoleStudio/campay-go-sdk/internal/stubs"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -87,4 +92,37 @@ func TestClient_ValidateCallback(t *testing.T) {
 		// Assert
 		assert.NotNil(t, err)
 	})
+}
+
+func TestClient_Withdraw(t *testing.T) {
+	// Setup
+	t.Parallel()
+
+	// Arrange
+	requests := make([]*http.Request, 0)
+	responses := [][]byte{stubs.PostTokenResponse(), stubs.PostWithdrawResponse()}
+	server := helpers.MakeRequestCapturingTestServer(http.StatusOK, responses, &requests)
+	client := New(WithEnvironment(Environment(server.URL)))
+
+	// Act
+	withdrawResponse, response, err := client.Withdraw(context.Background(), &WithdrawParams{
+		Amount:            100,
+		To:                "2376XXXXXXXX",
+		Description:       "Test",
+		ExternalReference: nil,
+	})
+
+	// Assert
+	assert.Nil(t, err)
+
+	assert.GreaterOrEqual(t, len(requests), 1)
+	request := requests[len(requests)-1]
+	assert.Equal(t, "/withdraw/", request.URL.Path)
+	assert.True(t, strings.HasPrefix(request.Header.Get("Authorization"), "Token"))
+	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
+
+	assert.Equal(t, &WithdrawResponse{Reference: "26676007-1c31-46d7-9c71-acb031cf0de4", Status: "PENDING"}, withdrawResponse)
+
+	// Teardown
+	server.Close()
 }

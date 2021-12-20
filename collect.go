@@ -1,7 +1,7 @@
 package campay
 
-// CollectOptions is the details needed to initialize a payment
-type CollectOptions struct {
+// CollectParams is the details needed to initialize a payment
+type CollectParams struct {
 	Amount            uint   `json:"amount"`
 	Currency          string `json:"currency"`
 	From              string `json:"from"`
