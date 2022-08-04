@@ -117,7 +117,7 @@ func TestClient_Withdraw(t *testing.T) {
 
 	assert.GreaterOrEqual(t, len(requests), 1)
 	request := requests[len(requests)-1]
-	assert.Equal(t, "/withdraw/", request.URL.Path)
+	assert.Equal(t, "/api/withdraw/", request.URL.Path)
 	assert.True(t, strings.HasPrefix(request.Header.Get("Authorization"), "Token"))
 	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
 

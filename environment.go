@@ -5,10 +5,10 @@ type Environment string
 
 var (
 	// DevEnvironment is the development Environment
-	DevEnvironment = Environment("https://demo.campay.net/api")
+	DevEnvironment = Environment("https://demo.campay.net")
 
 	// ProdEnvironment is the production Environment
-	ProdEnvironment = Environment("https://www.campay.net/api")
+	ProdEnvironment = Environment("https://www.campay.net")
 )
 
 func (e Environment) String() string {

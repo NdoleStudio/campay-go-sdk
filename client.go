@@ -30,6 +30,7 @@ type Client struct {
 	token               string
 	tokenExpirationTime int64
 	Transaction         *transactionService
+	Utilities           *utilitiesService
 }
 
 // New creates and returns a new campay.Client from a slice of campay.ClientOption.
@@ -50,6 +51,7 @@ func New(options ...ClientOption) *Client {
 
 	client.common.client = client
 	client.Transaction = (*transactionService)(&client.common)
+	client.Utilities = (*utilitiesService)(&client.common)
 	return client
 }
 
@@ -62,7 +64,7 @@ func (client *Client) Token(ctx context.Context) (*Token, *Response, error) {
 		"password": client.apiPassword,
 	}
 
-	request, err := client.newRequest(ctx, http.MethodPost, "/token/", payload)
+	request, err := client.newRequest(ctx, http.MethodPost, "/api/token/", payload)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -97,7 +99,7 @@ func (client *Client) Collect(ctx context.Context, params *CollectParams) (*Coll
 		return nil, nil, err
 	}
 
-	request, err := client.newRequest(ctx, http.MethodPost, "/collect/", params)
+	request, err := client.newRequest(ctx, http.MethodPost, "/api/collect/", params)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -124,7 +126,7 @@ func (client *Client) Withdraw(ctx context.Context, params *WithdrawParams) (*Wi
 		return nil, nil, err
 	}
 
-	request, err := client.newRequest(ctx, http.MethodPost, "/withdraw/", params)
+	request, err := client.newRequest(ctx, http.MethodPost, "/api/withdraw/", params)
 	if err != nil {
 		return nil, nil, err
 	}

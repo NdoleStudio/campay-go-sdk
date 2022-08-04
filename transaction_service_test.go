@@ -31,7 +31,7 @@ func TestTransactionService_Get(t *testing.T) {
 
 	assert.GreaterOrEqual(t, len(requests), 1)
 	request := requests[len(requests)-1]
-	assert.Equal(t, fmt.Sprintf("/transaction/%s/", reference), request.URL.Path)
+	assert.Equal(t, fmt.Sprintf("/api/transaction/%s/", reference), request.URL.Path)
 	assert.True(t, strings.HasPrefix(request.Header.Get("Authorization"), "Token"))
 	assert.Equal(t, http.StatusOK, response.HTTPResponse.StatusCode)
 

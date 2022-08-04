@@ -25,6 +25,10 @@ func (r *Response) Error() error {
 
 func (r *Response) errorMessage() string {
 	var buf bytes.Buffer
+	buf.WriteString(r.HTTPResponse.Request.Method)
+	buf.WriteString(" ")
+	buf.WriteString(r.HTTPResponse.Request.URL.String())
+	buf.WriteString(":")
 	buf.WriteString(strconv.Itoa(r.HTTPResponse.StatusCode))
 	buf.WriteString(": ")
 	buf.WriteString(http.StatusText(r.HTTPResponse.StatusCode))

@@ -19,3 +19,5 @@ vendor/
 
 # Temp file on windows
 $path
+
+utilities_service_test.go

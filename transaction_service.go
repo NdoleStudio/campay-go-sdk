@@ -19,7 +19,7 @@ func (service *transactionService) Get(ctx context.Context, reference string) (*
 		return nil, nil, err
 	}
 
-	request, err := service.client.newRequest(ctx, http.MethodGet, fmt.Sprintf("/transaction/%s/", reference), nil)
+	request, err := service.client.newRequest(ctx, http.MethodGet, fmt.Sprintf("/api/transaction/%s/", reference), nil)
 	if err != nil {
 		return nil, nil, err
 	}
