@@ -35,6 +35,9 @@ import "github.com/NdoleStudio/campay-go-sdk"
   - `POST /withdraw`: Withdraw funds to a mobile money account
 - [Transaction](#transaction)
   - `GET /transaction/{reference}/`: Get the status of a transaction
+- [Utilities](#utilities)
+  - `POST /api/utilities/airtime/transfer/`: Transfers airtime to a mobile number
+  - `GET /api/utilities/transaction/{reference}/`: Get the status of a transaction
 
 ## Usage
 
@@ -154,6 +157,35 @@ if err != nil {
 }
 
 log.Println(transaction.Reference) // e.g 26676007-1c31-46d7-9c71-acb031cf0de4
+```
+
+### Utilities
+
+#### `POST /api/utilities/airtime/transfer/`: Transfers airtime to a mobile number
+
+```go
+transaction, httpResponse, err := client.Utilities.AirtimeTransferSync(context.Background(), &AirtimeTransferParams{
+  Amount:            "100",
+  To:                "237677777777",
+  ExternalReference: "sample-external-ref",
+})
+
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(transaction.Reference) // e.g 26676007-1c31-46d7-9c71-acb031cf0de4
+```
+
+#### `GET /api/utilities/transaction/{reference}/`: Get the status of a transaction
+
+```go
+transaction, httpResponse, err := client.Utilities.AirtimeTransferSync(context.Background(), "" /* Transaction reference */)
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(transaction.Status) // e.g "SUCCESSFUL"
 ```
 
 ## Testing

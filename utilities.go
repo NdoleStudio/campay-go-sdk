@@ -25,3 +25,13 @@ type UtilitiesTransaction struct {
 	Type              string      `json:"type"`
 	Reason            interface{} `json:"reason"`
 }
+
+// IsPending checks if a transaction is pending
+func (transaction *UtilitiesTransaction) IsPending() bool {
+	return transaction.Status == "PENDING"
+}
+
+// IsSuccessfull checks if a transaction is successfull
+func (transaction *UtilitiesTransaction) IsSuccessfull() bool {
+	return transaction.Status == "SUCCESSFUL"
+}

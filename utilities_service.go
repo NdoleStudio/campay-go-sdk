@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // utilitiesService is the API client for the `/transaction/` endpoint
@@ -35,6 +36,27 @@ func (service *utilitiesService) AirtimeTransfer(ctx context.Context, params *Ai
 	}
 
 	return transaction, response, nil
+}
+
+// AirtimeTransferSync transfers airtime to a mobile number and waits for the transaction to be completed.
+// POST /api/utilities/airtime/transfer/
+// API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#544cb091-1104-4bf1-b9ad-893c5067c925
+func (service *utilitiesService) AirtimeTransferSync(ctx context.Context, params *AirtimeTransferParams) (*UtilitiesTransaction, *Response, error) {
+	transaction, response, err := service.AirtimeTransfer(ctx, params)
+	if err != nil {
+		return nil, response, err
+	}
+
+	// wait for completion in 2 minutes
+	counter := 1
+	for {
+		status, response, err := service.TransactionStatus(ctx, transaction.Reference)
+		if err != nil || !status.IsPending() || ctx.Err() != nil || counter == 12 {
+			return status, response, err
+		}
+		time.Sleep(10 * time.Second)
+		counter++
+	}
 }
 
 // TransactionStatus checks the status of an initiated utility (Airtime) transaction
