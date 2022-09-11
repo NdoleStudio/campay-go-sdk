@@ -126,3 +126,42 @@ func TestClient_Withdraw(t *testing.T) {
 	// Teardown
 	server.Close()
 }
+
+func TestClient_WithdrawSync(t *testing.T) {
+	// Setup
+	t.Parallel()
+
+	// Arrange
+	requests := make([]*http.Request, 0)
+	responses := [][]byte{stubs.PostTokenResponse(), stubs.PostWithdrawResponse(), stubs.GetPendingTransactionResponse(), stubs.GetSuccessfulTransactionResponse()}
+	server := helpers.MakeRequestCapturingTestServer(http.StatusOK, responses, &requests)
+	client := New(WithEnvironment(Environment(server.URL)))
+
+	// Act
+	transaction, _, err := client.WithdrawSync(context.Background(), &WithdrawParams{
+		Amount:            100,
+		To:                "2376XXXXXXXX",
+		Description:       "Test",
+		ExternalReference: nil,
+	})
+
+	// Assert
+	assert.Nil(t, err)
+
+	assert.GreaterOrEqual(t, len(requests), 4)
+	assert.Equal(t, &Transaction{
+		Reference:         "bcedde9b-62a7-4421-96ac-2e6179552a1a",
+		Status:            "SUCCESSFUL",
+		Amount:            1,
+		Currency:          "XAF",
+		Operator:          "MTN",
+		Code:              "CP201027T00005",
+		OperatorReference: "1880106956",
+	}, transaction)
+
+	assert.True(t, transaction.IsSuccessfull())
+	assert.False(t, transaction.IsPending())
+
+	// Teardown
+	server.Close()
+}

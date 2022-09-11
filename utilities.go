@@ -15,15 +15,15 @@ type AirtimeTransferResponse struct {
 
 // UtilitiesTransaction represent a utility transaction
 type UtilitiesTransaction struct {
-	Reference         string      `json:"reference"`
-	ExternalReference string      `json:"external_reference"`
-	Status            string      `json:"status"`
-	Amount            float64     `json:"amount"`
-	Currency          string      `json:"currency"`
-	Operator          string      `json:"operator"`
-	Code              string      `json:"code"`
-	Type              string      `json:"type"`
-	Reason            interface{} `json:"reason"`
+	Reference         string  `json:"reference"`
+	ExternalReference string  `json:"external_reference"`
+	Status            string  `json:"status"`
+	Amount            float64 `json:"amount"`
+	Currency          string  `json:"currency"`
+	Operator          string  `json:"operator"`
+	Code              string  `json:"code"`
+	Type              string  `json:"type"`
+	Reason            string  `json:"reason"`
 }
 
 // IsPending checks if a transaction is pending

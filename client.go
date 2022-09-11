@@ -144,6 +144,27 @@ func (client *Client) Withdraw(ctx context.Context, params *WithdrawParams) (*Wi
 	return &withdrawResponse, response, nil
 }
 
+// WithdrawSync transfers money to a mobile number and waits for the transaction to be completed.
+// POST /withdraw/
+// API Doc: https://documenter.getpostman.com/view/2391374/T1LV8PVA#885dbde0-b0dd-4514-a0f9-f84fc83df12d
+func (client *Client) WithdrawSync(ctx context.Context, params *WithdrawParams) (*Transaction, *Response, error) {
+	transaction, response, err := client.Withdraw(ctx, params)
+	if err != nil {
+		return nil, response, err
+	}
+
+	// wait for completion in 2 minutes
+	counter := 1
+	for {
+		status, response, err := client.Transaction.Get(ctx, transaction.Reference)
+		if err != nil || !status.IsPending() || ctx.Err() != nil || counter == 12 {
+			return status, response, err
+		}
+		time.Sleep(10 * time.Second)
+		counter++
+	}
+}
+
 // newRequest creates an API request. A relative URL can be provided in uri,
 // in which case it is resolved relative to the BaseURL of the Client.
 // URI's should always be specified without a preceding slash.

@@ -18,7 +18,7 @@ func TestTransactionService_Get(t *testing.T) {
 
 	// Arrange
 	requests := make([]*http.Request, 0)
-	responses := [][]byte{stubs.PostTokenResponse(), stubs.GetTransactionResponse()}
+	responses := [][]byte{stubs.PostTokenResponse(), stubs.GetPendingTransactionResponse()}
 	server := helpers.MakeRequestCapturingTestServer(http.StatusOK, responses, &requests)
 	client := New(WithEnvironment(Environment(server.URL)))
 	reference := "bcedde9b-62a7-4421-96ac-2e6179552a1a"

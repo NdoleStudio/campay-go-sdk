@@ -10,3 +10,13 @@ type Transaction struct {
 	Code              string  `json:"code"`
 	OperatorReference string  `json:"operator_reference"`
 }
+
+// IsPending checks if a transaction is pending
+func (transaction *Transaction) IsPending() bool {
+	return transaction.Status == "PENDING"
+}
+
+// IsSuccessfull checks if a transaction is successfull
+func (transaction *Transaction) IsSuccessfull() bool {
+	return transaction.Status == "SUCCESSFUL"
+}

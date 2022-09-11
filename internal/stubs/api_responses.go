@@ -20,8 +20,8 @@ func PostCollectResponse() string {
 	}`
 }
 
-// GetTransactionResponse is a dummy JSON response for the Transaction Status
-func GetTransactionResponse() []byte {
+// GetPendingTransactionResponse is a dummy JSON response for the Transaction Status
+func GetPendingTransactionResponse() []byte {
 	return []byte(`
 	{
 		"reference": "bcedde9b-62a7-4421-96ac-2e6179552a1a",
@@ -34,6 +34,54 @@ func GetTransactionResponse() []byte {
 	}`)
 }
 
+// GetSuccessfulTransactionResponse is a dummy JSON response for the Transaction Status
+func GetSuccessfulTransactionResponse() []byte {
+	return []byte(`
+	{
+		"reference": "bcedde9b-62a7-4421-96ac-2e6179552a1a",
+		"status": "SUCCESSFUL",
+		"amount": 1,
+		"currency": "XAF",
+		"operator": "MTN",
+		"code": "CP201027T00005",
+		"operator_reference": "1880106956"
+	}`)
+}
+
+// GetPendingAirtimeTransactionResponse is a dummy JSON response for a pending airtime transaction
+func GetPendingAirtimeTransactionResponse() []byte {
+	return []byte(`
+	{
+		"reference": "971e32ae-bb5a-420a-a38a-c2931536609f",
+		"external_reference": "5577006791947779410",
+		"status": "PENDING",
+		"amount": 100,
+		"currency": "XAF",
+		"operator": "ORANGE_CM",
+		"code": "CP220804U0649K",
+		"type": "AIRTIME",
+		"reason": ""
+	}
+`)
+}
+
+// GetSuccessfullAirtimeTransactionResponse is a dummy JSON response for a successful airtime transaction
+func GetSuccessfullAirtimeTransactionResponse() []byte {
+	return []byte(`
+	{
+		"reference": "971e32ae-bb5a-420a-a38a-c2931536609f",
+		"external_reference": "5577006791947779410",
+		"status": "SUCCESSFUL",
+		"amount": 100,
+		"currency": "XAF",
+		"operator": "ORANGE_CM",
+		"code": "CP220804U0649K",
+		"type": "AIRTIME",
+		"reason": ""
+	}
+`)
+}
+
 // GetBalanceResponse is a dummy JSON response for the transaction balance
 func GetBalanceResponse() string {
 	return `
@@ -44,6 +92,16 @@ func GetBalanceResponse() string {
 		"currency": "XAF"
 	}
 `
+}
+
+// PostTransferResponse is a dummy JSON response for airtime transfer requests
+func PostTransferResponse() []byte {
+	return []byte(`
+	{
+		"reference":"26676007-1c31-46d7-9c71-acb031cf0de4",
+		"status":"PENDING"
+	}
+`)
 }
 
 // PostWithdrawResponse is a dummy JSON response for withdraw requests
