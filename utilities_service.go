@@ -51,7 +51,7 @@ func (service *utilitiesService) AirtimeTransferSync(ctx context.Context, params
 	counter := 1
 	for {
 		status, response, err := service.TransactionStatus(ctx, transaction.Reference)
-		if err != nil || !status.IsPending() || ctx.Err() != nil || counter == 12 {
+		if err != nil || !status.IsPending() || ctx.Err() != nil || counter == 30 {
 			return status, response, err
 		}
 		time.Sleep(10 * time.Second)

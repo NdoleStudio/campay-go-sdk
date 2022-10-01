@@ -157,7 +157,7 @@ func (client *Client) WithdrawSync(ctx context.Context, params *WithdrawParams) 
 	counter := 1
 	for {
 		status, response, err := client.Transaction.Get(ctx, transaction.Reference)
-		if err != nil || !status.IsPending() || ctx.Err() != nil || counter == 12 {
+		if err != nil || !status.IsPending() || ctx.Err() != nil || counter == 30 {
 			return status, response, err
 		}
 		time.Sleep(10 * time.Second)
