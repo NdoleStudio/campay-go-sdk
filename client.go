@@ -6,12 +6,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"sync"
 	"time"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type service struct {
@@ -212,7 +211,7 @@ func (client *Client) do(req *http.Request) (*Response, error) {
 		return resp, err
 	}
 
-	_, err = io.Copy(ioutil.Discard, httpResponse.Body)
+	_, err = io.Copy(io.Discard, httpResponse.Body)
 	if err != nil {
 		return resp, err
 	}
@@ -251,7 +250,7 @@ func (client *Client) newResponse(httpResponse *http.Response) (*Response, error
 	resp := new(Response)
 	resp.HTTPResponse = httpResponse
 
-	buf, err := ioutil.ReadAll(resp.HTTPResponse.Body)
+	buf, err := io.ReadAll(resp.HTTPResponse.Body)
 	if err != nil {
 		return nil, err
 	}
