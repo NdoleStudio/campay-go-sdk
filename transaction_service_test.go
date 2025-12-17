@@ -38,7 +38,7 @@ func TestTransactionService_Get(t *testing.T) {
 	assert.Equal(t, &Transaction{
 		Reference:         "bcedde9b-62a7-4421-96ac-2e6179552a1a",
 		Status:            "PENDING",
-		Amount:            1,
+		Amount:            1.0,
 		Currency:          "XAF",
 		Operator:          "MTN",
 		Code:              "CP201027T00005",

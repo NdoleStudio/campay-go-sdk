@@ -26,7 +26,7 @@ func GetPendingTransactionResponse() []byte {
 	{
 		"reference": "bcedde9b-62a7-4421-96ac-2e6179552a1a",
 		"status": "PENDING",
-		"amount": 1,
+		"amount": 1.0,
 		"currency": "XAF",
 		"operator": "MTN",
 		"code": "CP201027T00005",
