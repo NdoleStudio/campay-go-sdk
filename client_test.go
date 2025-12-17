@@ -159,7 +159,7 @@ func TestClient_WithdrawSync(t *testing.T) {
 		OperatorReference: "1880106956",
 	}, transaction)
 
-	assert.True(t, transaction.IsSuccessfull())
+	assert.True(t, transaction.IsSuccessful())
 	assert.False(t, transaction.IsPending())
 
 	// Teardown
