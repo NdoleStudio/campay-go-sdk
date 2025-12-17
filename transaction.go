@@ -4,7 +4,7 @@ package campay
 type Transaction struct {
 	Reference         string  `json:"reference"`
 	Status            string  `json:"status"`
-	Amount            float64 `json:"amount"`
+	Amount            any `json:"amount"`
 	Currency          string  `json:"currency"`
 	Operator          string  `json:"operator"`
 	Code              string  `json:"code"`
