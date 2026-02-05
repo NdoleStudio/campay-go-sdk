@@ -38,10 +38,12 @@ import "github.com/NdoleStudio/campay-go-sdk"
 - [Utilities](#utilities)
   - `POST /api/utilities/airtime/transfer/`: Transfers airtime to a mobile number
   - `GET /api/utilities/transaction/{reference}/`: Get the status of a transaction
+- **Payment Links**
+  - `POST /api/get_payment_link/`: Receive payments from your clients using generated links.
 
 ## Usage
 
-### Initializing the Client
+### Initialising the Client
 
 An instance of the `campay` client can be created using `New()`.  The `http.Client` supplied will be used to make requests to the API.
 
