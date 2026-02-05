@@ -114,6 +114,16 @@ func PostWithdrawResponse() []byte {
 `)
 }
 
+// CreatePaymentLinkResponse is a dummy JSON response for payment link creation requests
+func CreatePaymentLinkResponse() []byte {
+	return []byte(`
+{
+  "link": "http://127.0.0.1:8000/pay/test-xyz-1631658",
+  "reference": "740871ff-c527-4474-be6b-147aaas2ea5"
+}
+`)
+}
+
 // GetHistoryResponse is a dummy JSON response for the transaction history
 func GetHistoryResponse() string {
 	return `

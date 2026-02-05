@@ -30,6 +30,7 @@ type Client struct {
 	tokenExpirationTime int64
 	Transaction         *transactionService
 	Utilities           *utilitiesService
+	PaymentLink         *paymentLinkService
 }
 
 // New creates and returns a new campay.Client from a slice of campay.ClientOption.
@@ -51,6 +52,7 @@ func New(options ...ClientOption) *Client {
 	client.common.client = client
 	client.Transaction = (*transactionService)(&client.common)
 	client.Utilities = (*utilitiesService)(&client.common)
+	client.PaymentLink = (*paymentLinkService)(&client.common)
 	return client
 }
 
