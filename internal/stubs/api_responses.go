@@ -82,18 +82,6 @@ func GetSuccessfullAirtimeTransactionResponse() []byte {
 `)
 }
 
-// GetBalanceResponse is a dummy JSON response for the transaction balance
-func GetBalanceResponse() string {
-	return `
-	{
-		"total_balance": 0,
-		"mtn_balance": 0,
-		"orange_balance": 0,
-		"currency": "XAF"
-	}
-`
-}
-
 // PostTransferResponse is a dummy JSON response for airtime transfer requests
 func PostTransferResponse() []byte {
 	return []byte(`
@@ -120,6 +108,18 @@ func CreatePaymentLinkResponse() []byte {
 {
   "link": "http://127.0.0.1:8000/pay/test-xyz-1631658",
   "reference": "740871ff-c527-4474-be6b-147aaas2ea5"
+}
+`)
+}
+
+// BalanceResponse is a dummy JSON response for balance requests
+func BalanceResponse() []byte {
+	return []byte(`
+{
+  "total_balance": 3,
+  "mtn_balance": 2,
+  "orange_balance": 1,
+  "currency": "XAF"
 }
 `)
 }

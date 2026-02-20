@@ -40,6 +40,8 @@ import "github.com/NdoleStudio/campay-go-sdk"
   - `GET /api/utilities/transaction/{reference}/`: Get the status of a transaction
 - **Payment Links**
   - `POST /api/get_payment_link/`: Receive payments from your clients using generated links.
+- **Account Balance**
+  - `GET /api/balance/`: Get Application Balance
 
 ## Usage
 
