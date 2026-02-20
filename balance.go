@@ -2,8 +2,8 @@ package campay
 
 // Balance is the response from the `/balance/` endpoint
 type Balance struct {
-	TotalBalance  int    `json:"total_balance"`
-	MtnBalance    int    `json:"mtn_balance"`
-	OrangeBalance int    `json:"orange_balance"`
-	Currency      string `json:"currency"`
+	TotalBalance  float64 `json:"total_balance"`
+	MtnBalance    float64 `json:"mtn_balance"`
+	OrangeBalance float64 `json:"orange_balance"`
+	Currency      string  `json:"currency"`
 }

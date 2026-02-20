@@ -116,7 +116,7 @@ func CreatePaymentLinkResponse() []byte {
 func BalanceResponse() []byte {
 	return []byte(`
 {
-  "total_balance": 3,
+  "total_balance": 3.0,
   "mtn_balance": 2,
   "orange_balance": 1,
   "currency": "XAF"
