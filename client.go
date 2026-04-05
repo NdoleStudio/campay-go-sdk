@@ -32,6 +32,7 @@ type Client struct {
 	Utilities           *utilitiesService
 	PaymentLink         *paymentLinkService
 	Balance             *balanceService
+	HolderInfo          *holderInfoService
 }
 
 // New creates and returns a new campay.Client from a slice of campay.ClientOption.
@@ -55,6 +56,7 @@ func New(options ...ClientOption) *Client {
 	client.Utilities = (*utilitiesService)(&client.common)
 	client.PaymentLink = (*paymentLinkService)(&client.common)
 	client.Balance = (*balanceService)(&client.common)
+	client.HolderInfo = (*holderInfoService)(&client.common)
 	return client
 }
 

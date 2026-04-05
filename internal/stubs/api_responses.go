@@ -124,6 +124,15 @@ func BalanceResponse() []byte {
 `)
 }
 
+// GetHolderInfoResponse is a dummy JSON response for holder info requests
+func GetHolderInfoResponse() []byte {
+	return []byte(`
+{
+  "full_name": "JOHN DOE"
+}
+`)
+}
+
 // GetHistoryResponse is a dummy JSON response for the transaction history
 func GetHistoryResponse() string {
 	return `

@@ -42,6 +42,8 @@ import "github.com/NdoleStudio/campay-go-sdk"
   - `POST /api/get_payment_link/`: Receive payments from your clients using generated links.
 - **Account Balance**
   - `GET /api/balance/`: Get Application Balance
+- [Holder Info](#holder-info)
+  - `GET /api/holder_info/`: Get the name associated to a phone number
 
 ## Usage
 
@@ -190,6 +192,19 @@ if err != nil {
 }
 
 log.Println(transaction.Status) // e.g "SUCCESSFUL"
+```
+
+### Holder Info
+
+#### `GET /api/holder_info/?phone_number={phoneNumber}`: Get the name associated to a phone number
+
+```go
+holderInfo, httpResponse, err := client.HolderInfo.HolderInfo(context.Background(), "237XXXXXXXX")
+if err != nil {
+    log.Fatal(err)
+}
+
+log.Println(holderInfo.FullName) // e.g "JOHN DOE"
 ```
 
 ## Testing
