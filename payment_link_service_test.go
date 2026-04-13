@@ -27,6 +27,8 @@ func TestPaymentLinkService_Create(t *testing.T) {
 		Description:       "Test",
 		ExternalReference: "",
 		RedirectURL:       "https://example.com/redirect",
+		Email:             "user@example.com",
+		PaymentOptions:    string(PaymentOptionMomo) + "," + string(PaymentOptionCard),
 	})
 
 	// Assert
