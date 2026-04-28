@@ -11,4 +11,5 @@ type CallbackRequest struct {
 	OperatorReference string `json:"operator_reference" query:"operator_reference"`
 	Signature         string `json:"signature" query:"signature"`
 	ExternalReference string `json:"external_reference" query:"external_reference"`
+	Description       string `json:"description" query:"description"`
 }
