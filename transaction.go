@@ -9,6 +9,7 @@ type Transaction struct {
 	Operator          string `json:"operator"`
 	Code              string `json:"code"`
 	OperatorReference string `json:"operator_reference"`
+	Description       string `json:"description"`
 }
 
 // IsPending checks if a transaction is pending

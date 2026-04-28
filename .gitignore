@@ -20,4 +20,4 @@ vendor/
 # Temp file on windows
 $path
 
-*e2e_test.go
+*e2e

@@ -25,6 +25,8 @@ type PaymentLinkCreateRequest struct {
 	ExternalReference  string `json:"external_reference"`
 	RedirectURL        string `json:"redirect_url"`
 	Email              string `json:"email,omitempty"`
+	FirstName          string `json:"first_name,omitempty"`
+	LastName           string `json:"last_name,omitempty"`
 	FailureRedirectURL string `json:"failure_redirect_url,omitempty"`
 	PaymentOptions     string `json:"payment_options,omitempty"`
 }
